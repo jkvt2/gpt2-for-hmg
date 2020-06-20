@@ -9,7 +9,7 @@ import skimage.io as io
 # import matplotlib.pyplot as plt
 import tensorflow as tf
 import numpy as np
-from data_utils import load_all_examples, get_data_split, get_norm_params
+from GPT2.data_utils import load_all_examples, get_data_split, get_norm_params
 
 SMPL_MODEL_PATH = os.path.join(
     'hmr', 'models', 'neutral_smpl_with_cocoplus_reg.pkl')
@@ -94,7 +94,11 @@ def main_hmr(json=True):
                       rend_img)
 
 def main_gpt():
-    trn_ex, _ = load_all_examples(get_data_split())
+    trn_ex, _ = load_all_examples(
+        get_data_split(
+            data_split_file='data/split',
+            hmr_dir='data/hmr'),
+        hmr_dir='data/hmr')
     mean, std = get_norm_params(trn_ex)
     proc_param = {
         'scale': 1.0,
